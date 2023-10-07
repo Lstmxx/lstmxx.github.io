@@ -1,6 +1,7 @@
 ---
 title: LeetCode
 date: 2023-09-27 17:34:38
+layout: 
 ---
 
 1. [动态规划](/leetcode/动态规划/)
