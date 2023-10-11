@@ -1,21 +1,21 @@
 ---
 title: 动态规划
 ---
-
-<div class="archive">
-  <% var lastyear; %>
-  <% page.posts.each(function(post){ %>
-    <% var year = post.date.year() %>
-    <% if(lastyear !== year){ %>
-      <h4 class="year"><%= year %></h4>
-      <% lastyear = year %>
-    <% } %>
-    <div class="archive_item">
-      <a class="title" href="<%- url_for(post.path) %>"><%= post.title %></a>
-      <span class="date"><%= post.date.format('YYYY-MM-DD') %></span>
-    </div>
-  <% }) %>
-  <div class="pagination">
-    <%- paginator({ total: Math.ceil(site.posts.length / config.per_page)}) %>
-  </div>
-</div>
+[1137.第N个泰波那契数](/leetcode/动态规划/1137.第N个泰波那契数)
+[118.杨辉三角](/leetcode/动态规划/118.杨辉三角)
+[119.杨辉三角II](/leetcode/动态规划/119.杨辉三角II)
+[120.三角形最小路径和](/leetcode/动态规划/120.三角形最小路径和)
+[322.零钱兑换](/leetcode/动态规划/322.零钱兑换)
+[45.跳跃游戏II](/leetcode/动态规划/45.跳跃游戏II)
+[509.斐波那契数](/leetcode/动态规划/509.斐波那契数)
+[53.最大子序和](/leetcode/动态规划/53.最大子序和)
+[55.跳跃游戏](/leetcode/动态规划/55.跳跃游戏)
+[62.不同路径](/leetcode/动态规划/62.不同路径)
+[63.不同路径II](/leetcode/动态规划/63.不同路径II)
+[64.最小路径和](/leetcode/动态规划/64.最小路径和)
+[70.爬楼梯](/leetcode/动态规划/70.爬楼梯)
+[746.使用最小花费爬楼梯](/leetcode/动态规划/746.使用最小花费爬楼梯)
+[91.解码方法](/leetcode/动态规划/91.解码方法)
+[931.下降路径最小和](/leetcode/动态规划/931.下降路径最小和)
+[剑指OfferII103.最少的硬币数目](/leetcode/动态规划/剑指OfferII103.最少的硬币数目)
+[技巧](/leetcode/动态规划/技巧)
