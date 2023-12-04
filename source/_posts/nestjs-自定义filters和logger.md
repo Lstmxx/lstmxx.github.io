@@ -1,5 +1,5 @@
 ---
-title: nestjs-自定义filters和logger
+title: nestjs自定义filters和logger
 date: 2023-12-04 23:21:16
 tags: nestjs
 categories: 后端
@@ -113,7 +113,7 @@ async function bootstrap() {
 
 运行之后会发现生效了
 
-![Untitled](%E6%97%A5%E5%BF%97%202c2e4a7eccc04e46bbd1eb9a56a55ea8/Untitled%201.png)
+![Untitled](https://cdn.statically.io/gh/Lstmxx/picx-images-hosting@master/20231204/Untitled-1.2uhgo1eix6w0.png)
 
 编写 fitlers
 
