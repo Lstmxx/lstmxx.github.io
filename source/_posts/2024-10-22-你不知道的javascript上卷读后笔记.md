@@ -1,8 +1,10 @@
 ---
 title: 你不知道的javascript上卷读后笔记
 date: 2024-10-22 09:42:32
-tags: 笔记 javascript
-categories: javascript
+tags:
+  - javascript
+categories:
+  - 阅读笔记
 ---
 
 ## 前言

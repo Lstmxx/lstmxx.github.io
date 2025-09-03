@@ -1,8 +1,11 @@
 ---
-title: 基于webtorrent和electron的磁力链下载器
+title: 基于webtorrent和Electron的磁力链下载器
 date: 2024-10-18 10:56:48
 tags:
-categories: electron webtorrent
+  - Electron
+  - WebTorrent
+categories:
+  - Electron
 ---
 
 **bt-downloader**是一个基于**webtorrent**和**electron**的磁力链下载器。

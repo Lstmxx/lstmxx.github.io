@@ -1,8 +1,10 @@
 ---
 title: nestjs环境搭建
 date: 2023-11-07 22:47:50
-tags: nestjs
-categories: 后端
+tags:
+  - NestJS
+categories:
+  - 后端
 ---
 
 ## 项目初始化

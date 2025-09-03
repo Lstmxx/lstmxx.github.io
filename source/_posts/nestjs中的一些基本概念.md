@@ -1,8 +1,10 @@
 ---
 title: nestjs中的一些基本概念
 date: 2023-11-07 22:54:02
-tags: nestjs
-categories: 后端
+tags:
+  - NestJS
+categories:
+  - 后端
 ---
 
 ## AOP

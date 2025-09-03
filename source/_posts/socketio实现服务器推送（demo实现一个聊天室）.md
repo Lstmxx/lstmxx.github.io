@@ -2,7 +2,11 @@
 title: socketio实现服务器推送（demo实现一个聊天室）
 date: 2020-06-29 11:20:26
 tags:
+  - Python
+  - Flask
+  - WebSocket
 categories:
+  - 项目
 ---
 
 demo 演示地址：<http://chat.lstmxx.cn>
