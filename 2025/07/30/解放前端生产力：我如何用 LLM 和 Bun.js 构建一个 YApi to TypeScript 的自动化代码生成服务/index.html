@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务 | Lstmxx的空间</title><meta name="author" content="Lstmxx"><meta name="copyright" content="Lstmxx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引言：我们与 YApi 的“爱恨情仇”在现代前后端分离的开发模式中，API 文档是连接前后端的桥梁。YApi 以其直观、易用的特性，成为了许多团队的首选。然而，对于前端开发者来说，一个普遍的痛点随之而来：我们不得不花费大量时间，手动将 YApi 上的接口定义，逐字逐句地翻译成项目中的 TypeScript 类型（Interfaces&#x2F;Types）。 这项工作不仅枯燥、重复，而且极易出错。一个字段的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务">
+<meta property="og:url" content="https://lstmxx.github.io/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Lstmxx的空间">
+<meta property="og:description" content="引言：我们与 YApi 的“爱恨情仇”在现代前后端分离的开发模式中，API 文档是连接前后端的桥梁。YApi 以其直观、易用的特性，成为了许多团队的首选。然而，对于前端开发者来说，一个普遍的痛点随之而来：我们不得不花费大量时间，手动将 YApi 上的接口定义，逐字逐句地翻译成项目中的 TypeScript 类型（Interfaces&#x2F;Types）。 这项工作不仅枯燥、重复，而且极易出错。一个字段的">
+<meta property="og:locale">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/36261034?v=4">
+<meta property="article:published_time" content="2025-07-30T03:54:38.000Z">
+<meta property="article:modified_time" content="2025-09-03T06:17:20.570Z">
+<meta property="article:author" content="Lstmxx">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="Bun">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/36261034?v=4"><link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/36261034?v=4"><link rel="canonical" href="https://lstmxx.github.io/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-03 14:17:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/36261034?v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-lines-leaning"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/random/"><i class="fa-fw fas fa-random"></i><span> 随机</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/leetcode/"><i class="fa-fw fas fa-code"></i><span> leetcode</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.statically.io/gh/Lstmxx/picx-images-hosting@master/20230921/.4g1jf3ur1rc0.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="Lstmxx的空间"><img class="site-icon" src="https://avatars.githubusercontent.com/u/36261034?v=4"/><span class="site-name">Lstmxx的空间</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-lines-leaning"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/random/"><i class="fa-fw fas fa-random"></i><span> 随机</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/leetcode/"><i class="fa-fw fas fa-code"></i><span> leetcode</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-07-30T03:54:38.000Z" title="Created 2025-07-30 11:54:38">2025-07-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-09-03T06:17:20.570Z" title="Updated 2025-09-03 14:17:20">2025-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="引言：我们与-YApi-的“爱恨情仇”"><a href="#引言：我们与-YApi-的“爱恨情仇”" class="headerlink" title="引言：我们与 YApi 的“爱恨情仇”"></a>引言：我们与 YApi 的“爱恨情仇”</h2><p>在现代前后端分离的开发模式中，API 文档是连接前后端的桥梁。YApi 以其直观、易用的特性，成为了许多团队的首选。然而，对于前端开发者来说，一个普遍的痛点随之而来：我们不得不花费大量时间，手动将 YApi 上的接口定义，逐字逐句地翻译成项目中的 TypeScript 类型（Interfaces/Types）。</p>
+<p>这项工作不仅枯燥、重复，而且极易出错。一个字段的拼写错误、一个数据类型的遗漏，都可能导致难以追踪的 Bug。当后端接口频繁变更时，这种维护成本更是呈指数级增长。我们不禁思考：这种高度模式化的重复性劳动，是否可以被彻底自动化？AI 大模型（LLM）能否理解 YApi 的 JSON 定义，并为我们编写出高质量、可维护的类型代码？</p>
+<p>为了终结这场“爱恨情仇”，<code>yapi-mcp-server</code> 诞生了。它是一个小巧而强大的命令行工具，旨在将 YApi 定义自动化生成为 TypeScript 代码。本文将完整分享它的设计思路、技术实现和开发过程中的心得体会。</p>
+<h2 id="一、项目核心特性"><a href="#一、项目核心特性" class="headerlink" title="一、项目核心特性"></a>一、项目核心特性</h2><p><code>yapi-mcp-server</code> 的核心目标是成为开发者工具箱中的一把利器，让类型定义不再成为开发的负担。</p>
+<ul>
+<li><strong>核心功能：</strong><ul>
+<li><strong>自动化生成：</strong> 一键连接指定的 YApi 项目，将接口定义智能地转换为强类型的 TypeScript 代码。</li>
+<li><strong>基于 LLM：</strong> 利用大语言模型强大的代码理解和生成能力，确保生成的代码不仅语法正确，而且具有良好的可读性和风格。</li>
+<li><strong>MCP 服务：</strong> 项目本身被构建为一个标准的模型上下文协议（Model-Context Protocol）服务，这为未来连接不同的 AI 模型或扩展更多功能提供了无限可能。</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、技术选型与架构设计"><a href="#二、技术选型与架构设计" class="headerlink" title="二、技术选型与架构设计"></a>二、技术选型与架构设计</h2><p>为了快速实现并保持项目的简洁性，我选择了一套非常现代且高效的技术栈。</p>
+<ul>
+<li><p><strong>为什么选择 Bun.js？</strong></p>
+<ul>
+<li><strong>极致性能：</strong> Bun 拥有闪电般的启动和执行速度，对于需要频繁调用的 CLI 工具来说，体验极佳。</li>
+<li><strong>一体化工具链：</strong> 它原生支持 TypeScript，并且内置了打包器（Bundler）和任务运行器（Task Runner）。这意味着我无需再配置 <code>tsc</code>、<code>webpack/rollup</code> 或 <code>nodemon</code>，一个 <code>bun</code> 命令就能搞定开发、构建和运行，极大地简化了项目配置。</li>
+<li><strong>拥抱现代：</strong> Bun 全面拥抱最新的 JavaScript API 和 Web 标准，让开发过程更加顺畅。</li>
+</ul>
+</li>
+<li><p><strong>核心依赖与它们扮演的角色：</strong></p>
+<ul>
+<li><code>@modelcontextprotocol/sdk</code>：这是构建 MCP 服务的核心。它提供了一套标准化的方法来定义一个函数（Function），这个函数可以接收输入，并由背后的大语言模型来执行处理逻辑，最后返回结果。</li>
+<li><code>axios</code>：一个强大而经典的 HTTP 客户端。我用它来与 YApi 服务进行所有网络通信，例如登录、拉取接口数据等。</li>
+<li><code>cookie</code>：一个轻量级的库，专门用于解析和序列化 HTTP Cookie。这是成功模拟 YApi 登录并保持会话的关键。</li>
+</ul>
+</li>
+<li><p><strong>项目架构解析：</strong></p>
+<ul>
+<li><strong><code>src/core/APIClient.ts</code>：</strong> YApi 的“适配器”。这个类封装了所有与 YApi 服务端的交互逻辑，包括登录、获取项目信息、拉取接口列表和获取单个接口的详细定义。它将原始的 HTTP 请求和响应，包装成对业务逻辑更友好的方法。</li>
+<li><strong><code>src/core/CookieManage.ts</code>：</strong> 独立的 Cookie 管理器。YApi 的接口数据大多需要登录后才能访问。这个模块专门负责从登录接口的响应头中捕获 <code>_yapi_token</code> 和 <code>_yapi_uid</code> 这两个关键 Cookie，并在后续的所有请求中携带它们，以维持登录状态。</li>
+<li><strong><code>src/index.ts</code>：</strong> 项目的入口和大脑。它负责：<ol>
+<li> 读取 <code>.env</code> 环境变量。</li>
+<li> 初始化 <code>APIClient</code>。</li>
+<li> 定义核心的 MCP 函数，该函数接收一个 YApi 接口 ID 作为输入。</li>
+<li> 在该函数内部，调用 <code>APIClient</code> 获取接口数据，然后精心设计一个 Prompt，将接口数据和生成指令一同发送给 LLM，最终返回 LLM 生成的 TypeScript 代码。</li>
+<li> 启动整个 MCP 服务，等待客户端的调用。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、开发中的关键挑战与解决方案"><a href="#三、开发中的关键挑战与解决方案" class="headerlink" title="三、开发中的关键挑战与解决方案"></a>三、开发中的关键挑战与解决方案</h2><p>开发过程中并非一帆风顺，以下是几个关键挑战及其解决方案。</p>
+<ul>
+<li><p><strong>挑战一：YApi 的登录认证</strong></p>
+<ul>
+<li><strong>问题：</strong> 如何在 Node.js 程序中模拟浏览器登录 YApi 并保持会 e 话？</li>
+<li><strong>解决方案：</strong> 通过浏览器开发者工具分析 YApi 的登录流程，我发现登录请求会返回一个包含关键认证信息的 <code>Set-Cookie</code> 响应头。于是，我使用 <code>axios</code> 发送一个 <code>POST</code> 请求到 <code>/api/user/login</code>，并在 <code>CookieManage.ts</code> 中实现了一个 <code>setCookie</code> 方法，它专门解析 <code>Set-Cookie</code> 响应头，提取出 <code>_yapi_token</code> 和 <code>_yapi_uid</code> 并保存起来。在后续所有对 YApi 的请求中，再将这些 Cookie 附加到请求头里，成功模拟了已登录的会话。</li>
+</ul>
+</li>
+<li><p><strong>挑战二：Prompt Engineering 的艺术</strong></p>
+<ul>
+<li><strong>问题：</strong> 如何设计 Prompt，才能让 LLM 稳定、可靠地生成我们期望的、格式统一的 TypeScript 代码？</li>
+<li><strong>解决方案：</strong> 这是项目的核心。经过多次尝试，我总结出了一套行之有效的 Prompt 模板。关键在于：<ol>
+<li> <strong>明确角色：</strong> “你是一个专业的 TypeScript 开发工程师…”</li>
+<li> <strong>清晰指令：</strong> “…你的任务是根据我提供的 YApi 接口的 JSON 数据，为这个接口生成请求参数（Request）和响应数据（Response）的 TypeScript Interface。”</li>
+<li> <strong>提供上下文：</strong> 将从 YApi 获取的接口详情 JSON 完整地作为输入提供给模型。</li>
+<li> <strong>定义输出格式和规则：</strong> 明确要求 Interface 的命名规范（如 <code>GetUserInfoRequest</code>）、添加 JSDoc 注释、处理可选字段和数组类型等细节。</li>
+<li> <strong>给出示例（Few-shot Learning）：</strong> 在 Prompt 中提供一两个简单的输入输出对，能极大地提升模型生成结果的准确性和稳定性。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="四、如何使用"><a href="#四、如何使用" class="headerlink" title="四、如何使用"></a>四、如何使用</h2><ul>
+<li><p><strong>快速上手指南：</strong></p>
+<ol>
+<li> 全局安装: <code>npm install -g @lstmxx/yapi-mcp-server</code></li>
+<li> 在你的项目根目录创建一个 <code>.env</code> 文件，配置 YApi 地址和凭据。</li>
+<li> 运行 <code>yapi-mcp-server</code> 启动服务。</li>
+<li>使用任何 MCP 客户端（如 <a target="_blank" rel="noopener" href="https://github.com/model-context-protocol/inspector">MCP Inspector</a>）与服务交互，输入接口文档 url，即可获得生成的代码。效果如下图所示<br> <img src="https://p0-xtjj-private.juejin.cn/tos-cn-i-73owjymdk6/7989b771270b4365b3d80b71c17cf068~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTHN0bXh4:q75.awebp?policy=eyJ2bSI6MywidWlkIjoiMTU3NDE1NjM4MzgyNTIyOSJ9&rk3s=f64ab15b&x-orig-authkey=f32326d3454f2ac7e96d3d06cdbb035152127018&x-orig-expires=1757476533&x-orig-sign=Vku9+2diX1pMo1Hm+xEx8uR/rMQ="><br> <img src="https://p0-xtjj-private.juejin.cn/tos-cn-i-73owjymdk6/f68803799595436786bdd94275513e8b~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTHN0bXh4:q75.awebp?policy=eyJ2bSI6MywidWlkIjoiMTU3NDE1NjM4MzgyNTIyOSJ9&rk3s=f64ab15b&x-orig-authkey=f32326d3454f2ac7e96d3d06cdbb035152127018&x-orig-expires=1757476533&x-orig-sign=bDUc8VePAVDPlbePL0xm6KHmm8Q="><br> <img src="https://p0-xtjj-private.juejin.cn/tos-cn-i-73owjymdk6/52dd5eb840c14ac5aac396cdf4fc56d1~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTHN0bXh4:q75.awebp?policy=eyJ2bSI6MywidWlkIjoiMTU3NDE1NjM4MzgyNTIyOSJ9&rk3s=f64ab15b&x-orig-authkey=f32326d3454f2ac7e96d3d06cdbb035152127018&x-orig-expires=1757476533&x-orig-sign=ofqKBCecxAWjo3apG4ARPM/tiVQ="></li>
+</ol>
+</li>
+</ul>
+<h2 id="五、总结与思考"><a href="#五、总结与思考" class="headerlink" title="五、总结与思考"></a>五、总结与思考</h2><p><code>yapi-mcp-server</code> 是一个简单而纯粹的尝试，它展示了如何将大语言模型（LLM）作为一种强大的“代码生成”工具，嵌入到我们日常的开发工作流中，从而将开发者从繁琐、重复的劳动中解放出来。</p>
+<hr>
+<ul>
+<li><strong>NPM:</strong> <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@lstmxx/yapi-mcp-server">https://www.npmjs.com/package/@lstmxx/yapi-mcp-server</a></li>
+<li><strong>GitHub:</strong> <a target="_blank" rel="noopener" href="https://github.com/Lstmxx/yapi-mcp-server">https://github.com/Lstmxx/yapi-mcp-server</a></li>
+</ul>
+<p>希望这个项目能为你带来帮助，也欢迎社区的朋友们试用、反馈 Bug 或贡献代码！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://lstmxx.github.io">Lstmxx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://lstmxx.github.io/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/">https://lstmxx.github.io/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/TypeScript/">TypeScript</a><a class="post-meta__tags" href="/tags/Bun/">Bun</a><a class="post-meta__tags" href="/tags/MCP/">MCP</a><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://avatars.githubusercontent.com/u/36261034?v=4" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/06/10/%E5%A6%82%E4%BD%95%E5%9C%A8Electron%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91/" title="如何在Electron中使用数据流的形式加载本地视频"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">如何在Electron中使用数据流的形式加载本地视频</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/07/01/%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E6%A0%91%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%92%8C%E5%B0%81%E8%A3%85%E6%A0%91%E5%BD%A2%E7%BB%84%E4%BB%B6/" title="如何构建树形数据和封装树形组件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-01</div><div class="title">如何构建树形数据和封装树形组件</div></div></a></div><div><a href="/2024/07/04/%E5%A6%82%E4%BD%95%E6%8B%86%E5%88%86long%20task/" title="如何拆分long task"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-04</div><div class="title">如何拆分long task</div></div></a></div><div><a href="/2024/10/18/%E5%A6%82%E4%BD%95%E7%BB%95%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD%E7%9A%84%E9%99%90%E5%88%B6/" title="如何绕开浏览器批量下载的限制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-18</div><div class="title">如何绕开浏览器批量下载的限制</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.githubusercontent.com/u/36261034?v=4" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Lstmxx</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Lstmxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Lstmxx" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:740719284@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">emmmmmm</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80%EF%BC%9A%E6%88%91%E4%BB%AC%E4%B8%8E-YApi-%E7%9A%84%E2%80%9C%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">引言：我们与 YApi 的“爱恨情仇”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">一、项目核心特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.</span> <span class="toc-text">二、技术选型与架构设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%85%B3%E9%94%AE%E6%8C%91%E6%88%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text">三、开发中的关键挑战与解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">四、如何使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">五、总结与思考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/" title="解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务">解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务</a><time datetime="2025-07-30T03:54:38.000Z" title="Created 2025-07-30 11:54:38">2025-07-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/10/%E5%A6%82%E4%BD%95%E5%9C%A8Electron%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91/" title="如何在Electron中使用数据流的形式加载本地视频">如何在Electron中使用数据流的形式加载本地视频</a><time datetime="2025-06-10T03:57:17.000Z" title="Created 2025-06-10 11:57:17">2025-06-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/22/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84javascript%E4%B8%8A%E5%8D%B7%E8%AF%BB%E5%90%8E%E7%AC%94%E8%AE%B0/" title="你不知道的javascript上卷读后笔记">你不知道的javascript上卷读后笔记</a><time datetime="2024-10-22T01:42:32.000Z" title="Created 2024-10-22 09:42:32">2024-10-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/18/%E5%9F%BA%E4%BA%8Ewebtorrent%E5%92%8Celectron%E7%9A%84%E7%A3%81%E5%8A%9B%E9%93%BE%E4%B8%8B%E8%BD%BD%E5%99%A8/" title="基于webtorrent和Electron的磁力链下载器">基于webtorrent和Electron的磁力链下载器</a><time datetime="2024-10-18T02:56:48.000Z" title="Created 2024-10-18 10:56:48">2024-10-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/18/%E5%A6%82%E4%BD%95%E7%BB%95%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD%E7%9A%84%E9%99%90%E5%88%B6/" title="如何绕开浏览器批量下载的限制">如何绕开浏览器批量下载的限制</a><time datetime="2024-10-18T02:53:09.000Z" title="Created 2024-10-18 10:53:09">2024-10-18</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Lstmxx</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
