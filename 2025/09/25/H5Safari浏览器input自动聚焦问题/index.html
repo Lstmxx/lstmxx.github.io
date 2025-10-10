@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>H5 Safari浏览器input自动聚焦问题 | Lstmxx的空间</title><meta name="author" content="Lstmxx"><meta name="copyright" content="Lstmxx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Sorry, your browser doesn&#39;t support embedded videos.   问题描述当用户在输入手机号后，自动获取验证码功能会将焦点从手机号输入框切换到验证码输入框，导致 blur 和 focus 事件被多次触发，从而引发 window.scrollTo 定位异常。  window.scrollTo 的适配为适配 iOS 设备，在 input 的 bl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="H5 Safari浏览器input自动聚焦问题">
+<meta property="og:url" content="https://lstmxx.github.io/2025/09/25/H5Safari%E6%B5%8F%E8%A7%88%E5%99%A8input%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Lstmxx的空间">
+<meta property="og:description" content="Sorry, your browser doesn&#39;t support embedded videos.   问题描述当用户在输入手机号后，自动获取验证码功能会将焦点从手机号输入框切换到验证码输入框，导致 blur 和 focus 事件被多次触发，从而引发 window.scrollTo 定位异常。  window.scrollTo 的适配为适配 iOS 设备，在 input 的 bl">
+<meta property="og:locale">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/36261034?v=4">
+<meta property="article:published_time" content="2025-09-25T02:21:29.000Z">
+<meta property="article:modified_time" content="2025-10-10T01:35:36.223Z">
+<meta property="article:author" content="Lstmxx">
+<meta property="article:tag" content="H5">
+<meta property="article:tag" content="Safari">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/36261034?v=4"><link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/36261034?v=4"><link rel="canonical" href="https://lstmxx.github.io/2025/09/25/H5Safari%E6%B5%8F%E8%A7%88%E5%99%A8input%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E9%97%AE%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'H5 Safari浏览器input自动聚焦问题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-10-10 09:35:36'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/36261034?v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-lines-leaning"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/random/"><i class="fa-fw fas fa-random"></i><span> 随机</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/leetcode/"><i class="fa-fw fas fa-code"></i><span> leetcode</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.statically.io/gh/Lstmxx/picx-images-hosting@master/20230921/.4g1jf3ur1rc0.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="Lstmxx的空间"><img class="site-icon" src="https://avatars.githubusercontent.com/u/36261034?v=4"/><span class="site-name">Lstmxx的空间</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-lines-leaning"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/random/"><i class="fa-fw fas fa-random"></i><span> 随机</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/leetcode/"><i class="fa-fw fas fa-code"></i><span> leetcode</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">H5 Safari浏览器input自动聚焦问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-09-25T02:21:29.000Z" title="Created 2025-09-25 10:21:29">2025-09-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-10-10T01:35:36.223Z" title="Updated 2025-10-10 09:35:36">2025-10-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/">问题汇总</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="H5 Safari浏览器input自动聚焦问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><video controls width="600">
+  <source src="https://github.com/Lstmxx/picx-images-hosting/raw/refs/heads/master/006d784f475ef7ac7fb19ff012e36d28.6bhg49dfih.mov">
+  Sorry, your browser doesn't support embedded videos.
+</video>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>当用户在输入手机号后，自动获取验证码功能会将焦点从手机号输入框切换到验证码输入框，导致 <code>blur</code> 和 <code>focus</code> 事件被多次触发，从而引发 <code>window.scrollTo</code> 定位异常。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/411961/1758594336727-63c1c14f-239d-4754-bbe9-d9d242971aa7.png"></p>
+<h3 id="window-scrollTo-的适配"><a href="#window-scrollTo-的适配" class="headerlink" title="window.scrollTo 的适配"></a>window.scrollTo 的适配</h3><p>为适配 iOS 设备，在 input 的 <code>blur</code> 和 <code>focus</code> 事件上绑定 <code>window.scrollTo</code>，以便在键盘弹出时，页面元素能够正确上移。实现代码如下：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">handleInputScroll</span>(<span class="params">isBlur: <span class="built_in">boolean</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (isBlur) &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">scrollTo</span>(<span class="number">0</span>, <span class="title class_">CacheData</span>.<span class="property">cacheScroll</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title class_">CacheData</span>.<span class="property">cacheScroll</span> = <span class="variable language_">window</span>.<span class="property">screenY</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h3 id="setTimeout-尝试"><a href="#setTimeout-尝试" class="headerlink" title="setTimeout 尝试"></a>setTimeout 尝试</h3><p>最初的思路是通过增加延迟（<code>setTimeout</code>）来避免事件触发过快。在 iOS 模拟器的 Safari 浏览器上，这一方案有效，但在真机上却无法生效。根本原因在于 Safari 的安全策略：<strong>只有在用户主动、直接交互（如 <code>click</code>、<code>touchstart</code> 等）事件处理流程中，调用 <code>focus()</code> 方法才能成功弹出键盘</strong>。</p>
+<h3 id="debounce（最终解决方案）"><a href="#debounce（最终解决方案）" class="headerlink" title="debounce（最终解决方案）"></a>debounce（最终解决方案）</h3><p>通过防抖（debounce）机制，避免 <code>window.scrollTo</code> 被多次触发，从而保证页面滚动行为的正确性。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/411961/1758595775999-3e1593e0-6a80-4bea-982c-fcd9aa5633b7.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://lstmxx.github.io">Lstmxx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://lstmxx.github.io/2025/09/25/H5Safari%E6%B5%8F%E8%A7%88%E5%99%A8input%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E9%97%AE%E9%A2%98/">https://lstmxx.github.io/2025/09/25/H5Safari%E6%B5%8F%E8%A7%88%E5%99%A8input%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/H5/">H5</a><a class="post-meta__tags" href="/tags/Safari/">Safari</a></div><div class="post_share"><div class="social-share" data-image="https://avatars.githubusercontent.com/u/36261034?v=4" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/" title="解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.githubusercontent.com/u/36261034?v=4" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Lstmxx</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Lstmxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Lstmxx" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:740719284@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">emmmmmm</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#window-scrollTo-%E7%9A%84%E9%80%82%E9%85%8D"><span class="toc-number">1.0.1.</span> <span class="toc-text">window.scrollTo 的适配</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setTimeout-%E5%B0%9D%E8%AF%95"><span class="toc-number">2.0.1.</span> <span class="toc-text">setTimeout 尝试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#debounce%EF%BC%88%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">2.0.2.</span> <span class="toc-text">debounce（最终解决方案）</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/25/H5Safari%E6%B5%8F%E8%A7%88%E5%99%A8input%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E9%97%AE%E9%A2%98/" title="H5 Safari浏览器input自动聚焦问题">H5 Safari浏览器input自动聚焦问题</a><time datetime="2025-09-25T02:21:29.000Z" title="Created 2025-09-25 10:21:29">2025-09-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/30/%E8%A7%A3%E6%94%BE%E5%89%8D%E7%AB%AF%E7%94%9F%E4%BA%A7%E5%8A%9B%EF%BC%9A%E6%88%91%E5%A6%82%E4%BD%95%E7%94%A8%20LLM%20%E5%92%8C%20Bun.js%20%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%20YApi%20to%20TypeScript%20%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1/" title="解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务">解放前端生产力：我如何用 LLM 和 Bun.js 构建一个 YApi to TypeScript 的自动化代码生成服务</a><time datetime="2025-07-30T03:54:38.000Z" title="Created 2025-07-30 11:54:38">2025-07-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/10/%E5%A6%82%E4%BD%95%E5%9C%A8Electron%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0%E8%A7%86%E9%A2%91/" title="如何在Electron中使用数据流的形式加载本地视频">如何在Electron中使用数据流的形式加载本地视频</a><time datetime="2025-06-10T03:57:17.000Z" title="Created 2025-06-10 11:57:17">2025-06-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/22/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84javascript%E4%B8%8A%E5%8D%B7%E8%AF%BB%E5%90%8E%E7%AC%94%E8%AE%B0/" title="你不知道的javascript上卷读后笔记">你不知道的javascript上卷读后笔记</a><time datetime="2024-10-22T01:42:32.000Z" title="Created 2024-10-22 09:42:32">2024-10-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/18/%E5%9F%BA%E4%BA%8Ewebtorrent%E5%92%8Celectron%E7%9A%84%E7%A3%81%E5%8A%9B%E9%93%BE%E4%B8%8B%E8%BD%BD%E5%99%A8/" title="基于webtorrent和Electron的磁力链下载器">基于webtorrent和Electron的磁力链下载器</a><time datetime="2024-10-18T02:56:48.000Z" title="Created 2024-10-18 10:56:48">2024-10-18</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Lstmxx</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
